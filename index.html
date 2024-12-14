@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input,
+        textarea {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #e9e9e9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>App Management</h1>
+
+        <!-- Add App Form -->
+        <h2>Add App</h2>
+        <form id="addAppForm">
+            <label for="app_name">App Name:</label>
+            <input type="text" id="app_name" name="app_name" required>
+
+            <label for="version">Version:</label>
+            <input type="text" id="version" name="version" required>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+
+            <button type="submit">Add App</button>
+        </form>
+
+        <!-- Get App Form -->
+        <h2>Get App</h2>
+        <form id="getAppForm">
+            <label for="getAppId">App ID:</label>
+            <input type="number" id="getAppId" name="id" required>
+
+            <button type="submit">Get App</button>
+        </form>
+
+        <!-- Delete App Form -->
+        <h2>Delete App</h2>
+        <form id="deleteAppForm">
+            <label for="deleteAppId">App ID:</label>
+            <input type="number" id="deleteAppId" name="id" required>
+
+            <button type="submit">Delete App</button>
+        </form>
+
+        <!-- Result Section -->
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        const baseUrl = "http://127.0.0.1:5000";
+
+        // Add App
+        document
+            .getElementById("addAppForm")
+            .addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const data = {
+                    app_name: document.getElementById("app_name").value,
+                    version: document.getElementById("version").value,
+                    description: document.getElementById("description").value,
+                };
+
+                const response = await fetch(`${baseUrl}/add-app`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                });
+                const result = await response.json();
+                document.getElementById("result").innerText = JSON.stringify(
+                    result,
+                    null,
+                    2
+                );
+            });
+
+        // Get App
+        document
+            .getElementById("getAppForm")
+            .addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const id = document.getElementById("getAppId").value;
+
+                const response = await fetch(`${baseUrl}/get-app/${id}`);
+                const result = await response.json();
+                document.getElementById("result").innerText = JSON.stringify(
+                    result,
+                    null,
+                    2
+                );
+            });
+
+        // Delete App
+        document
+            .getElementById("deleteAppForm")
+            .addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const id = document.getElementById("deleteAppId").value;
+
+                const response = await fetch(`${baseUrl}/delete-app/${id}`, {
+                    method: "DELETE",
+                });
+                const result = await response.json();
+                document.getElementById("result").innerText = JSON.stringify(
+                    result,
+                    null,
+                    2
+                );
+            });
+    </script>
+</body>
+
+</html>
