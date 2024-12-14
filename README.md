@@ -38,48 +38,6 @@ Modern software projects often require the integration of various components lik
 
 ## Advantages and Disadvantages
 
-Features
-
-1. Database Management
-
-Uses SQLAlchemy for ORM to manage app data.
-
-A SQLite database (apps.db) is configured.
-
-A sample app is preloaded into the database during initialization.
-
-2. Backend Development
-
-Provides RESTful APIs to manage app data:
-
-Add an App: POST /add-app
-
-Get App Details: GET /get-app/<id>
-
-Delete an App: DELETE /delete-app/<id>
-
-Renders a simple HTML page at the root route (/).
-
-3. Virtual Android System Simulation
-
-Simulates an Android device with:
-
-Device Model
-
-OS Version
-
-Memory Details
-
-Includes functionalities to:
-
-Display system information.
-
-Simulate app installations.
-
-4. Basic Networking
-
-Provides a /send-data endpoint to send mock data from the virtual Android system to a mock server using sockets.
-
 ### Advantages
 - **Modular Design**: Combines multiple functionalities, making it a useful tool for developers to learn or prototype.
 - **Lightweight**: Utilizes SQLite and Flask, making it easy to set up and run locally.
